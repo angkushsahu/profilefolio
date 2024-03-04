@@ -2,7 +2,7 @@
 
 ProfileFolio is a user-friendly web application designed for software engineers to effortlessly create personalized portfolios without prior web development experience. Built with Next.js and trpc, users can showcase their projects, skills, experiences, and education, enabling them to share their unique professional journey with the world.
 
-**Visit: [ProfileFolio](https://profilefolio.vercel.app)**
+**Visit: [ProfileFolio](https://profile-folio.vercel.app)**
 
 ## Tech Stack
 
