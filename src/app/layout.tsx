@@ -1,14 +1,13 @@
 import "~/styles/globals.css";
 
+import type { PropsWithChildren } from "react";
 import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import type { PropsWithChildren } from "react";
+import { ThemeProvider } from "~/providers";
+import { cn } from "~/lib";
 
-const inter = Inter({
-   subsets: ["latin"],
-   variable: "--font-sans",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
    title: "Create T3 App",
@@ -18,9 +17,13 @@ export const metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
    return (
-      <html lang="en">
-         <body className={`font-sans ${inter.variable}`}>
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+      <html lang="en" suppressHydrationWarning>
+         <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+            <TRPCReactProvider>
+               <ThemeProvider>
+                  <>{children}</>
+               </ThemeProvider>
+            </TRPCReactProvider>
          </body>
       </html>
    );
