@@ -30,11 +30,17 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-   if (!ctx.session?.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+   // TODO: Uncomment everything upon adding database for better authentication flow
+   // if (!ctx.session?.user) throw new TRPCError({ code: "UNAUTHORIZED" });
 
-   return next({
-      ctx: {
-         session: { ...ctx.session, user: ctx.session.user },
-      },
-   });
+   // const user = await User.findById(ctx.session.user.userId);
+   // if (!user) throw new TRPCError({ code: "UNAUTHORIZED", message: "Login to access this resource" });
+
+   // return next({
+   //    ctx: {
+   //       session: { ...ctx.session, user: ctx.session.user },
+   //       // user
+   //    },
+   // });
+   return next();
 });

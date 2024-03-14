@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import type { PropsWithChildren } from "react";
 import { Inter } from "next/font/google";
 
-import { viewportMeta, webMeta } from "~/components";
+import { Toaster, viewportMeta, webMeta } from "~/components";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/providers";
 import { cn } from "~/lib";
@@ -22,6 +22,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                   <>{children}</>
                </ThemeProvider>
             </TRPCReactProvider>
+            <Toaster />
          </body>
       </html>
    );
