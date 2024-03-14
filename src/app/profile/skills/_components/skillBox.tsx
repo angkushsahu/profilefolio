@@ -24,6 +24,7 @@ export default function SkillBox(skill: SkillBoxProps) {
             if (elem.id === data.id) {
                elem.skills = data.skills;
                elem.title = data.title;
+               break;
             }
          }
          utils.skills.getAllSkills.setData(undefined, () => oldElements);
