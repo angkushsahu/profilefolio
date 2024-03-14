@@ -7,7 +7,7 @@ import Contents from "./contents";
 export function Sidebar() {
    return (
       <>
-         <header className="flex items-center justify-between bg-muted px-5 py-4 lg:hidden">
+         <header className="sticky top-0 z-50 flex items-center justify-between bg-muted px-5 py-4 lg:hidden">
             <CustomLink href={homeUrl} className="text-xl font-semibold after:h-1">
                ProfileFolio
             </CustomLink>
