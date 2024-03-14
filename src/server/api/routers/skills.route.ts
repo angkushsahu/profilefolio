@@ -25,6 +25,7 @@ export const skillsRouter = createTRPCRouter({
       for (let i = 0; i < skillsArray.length; i++) {
          if (skillsArray[i]?.id === input.id) {
             skillsArray.splice(i, 1);
+            break;
          }
       }
    }),
