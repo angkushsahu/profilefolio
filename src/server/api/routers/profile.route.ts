@@ -7,22 +7,6 @@ import { profile as profiles } from "~/server/db/getSchema";
 import * as query from "~/server/db/queries";
 
 export const profileRouter = createTRPCRouter({
-   createProfile: protectedProcedure.input(createProfile).mutation(async ({ ctx, input }) => {
-      try {
-         const profile = await ctx.db
-            .insert(profiles)
-            .values({ ...input, userId: ctx.user.id })
-            .returning();
-         if (!profile?.[0])
-            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create your profile" });
-
-         return { message: "Created profile successfully", profile: profile[0] };
-      } catch (err: unknown) {
-         if (err instanceof Error) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: err.message });
-         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Internal Server Error" });
-      }
-   }),
-
    updateProfile: protectedProcedure.input(profileValidation).mutation(async ({ ctx, input }) => {
       try {
          const { id, ...restOfProfile } = input;
