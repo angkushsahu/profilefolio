@@ -4,9 +4,9 @@ import { compare } from "bcryptjs";
 import { eq } from "drizzle-orm";
 
 import { forgotPasswordTrpcSchema, loginSchema, registerSchema, resetPasswordTrpcSchema } from "~/validations";
+import { profile as profiles, users } from "~/server/db/getSchema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { sendResetEmail } from "~/lib/sendResetEmail";
-import { users } from "~/server/db/getSchema";
 import { hashStringWithBcrypt } from "~/lib";
 import * as query from "~/server/db/queries";
 
@@ -23,10 +23,15 @@ export const authRouter = createTRPCRouter({
          // eslint-disable-next-line
          const { confirmPassword: _, ...userValues } = input;
          userValues.password = await hashStringWithBcrypt(userValues.password);
-         const response = await ctx.db.insert(users).values(userValues).returning({ userId: users.id });
-         if (!response) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create user" });
+         const response = await ctx.db.insert(users).values(userValues).returning({ userId: users.id, name: users.name });
+         if (!response?.[0]) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create user" });
 
-         return { message: "User register successfull", userId: response[0]?.userId };
+         const firstName = response[0].name.split(" ")[0];
+         const profile = await ctx.db
+            .insert(profiles)
+            .values({ headline: `Hello, this is ${firstName ?? "user"}`, userId: response[0].userId });
+
+         return { message: "User register successfull", userId: response[0].userId };
       } catch (err: unknown) {
          if (err instanceof Error) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: err.message });
          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Internal Server Error" });
