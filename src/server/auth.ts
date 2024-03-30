@@ -10,9 +10,9 @@ export const authOptions: NextAuthOptions = {
    },
    session: {
       strategy: "jwt",
-      maxAge: Number(env.NEXT_PUBLIC_COOKIEAGE),
+      maxAge: Number(env.COOKIEAGE),
    },
-   secret: env.NEXT_PUBLIC_JWT_SECRET, // TODO: try to make it a server side environment variable
+   secret: env.JWT_SECRET,
    debug: process.env.NODE_ENV === "development",
    providers: [
       CredentialsProvider({
