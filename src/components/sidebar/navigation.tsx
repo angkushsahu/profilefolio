@@ -4,9 +4,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { profileEducationUrl, profileExperienceUrl, profileHomeUrl, profileProjectsUrl, profileSkillsUrl } from "~/constants";
+import type { ToggleNavigationProps } from "./types";
 import { cn } from "~/lib";
 
-export default function Navigation() {
+export default function Navigation({ setOpen }: ToggleNavigationProps) {
    const pathName = usePathname();
 
    const navLinks = [
@@ -26,6 +27,9 @@ export default function Navigation() {
                className={cn("rounded px-3 py-2 transition-colors delay-75 hover:bg-primary/30", {
                   "bg-primary text-white": link.isActive,
                })}
+               onClick={() => {
+                  if (setOpen) setOpen(false);
+               }}
             >
                {link.title}
             </Link>

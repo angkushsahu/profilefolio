@@ -1,9 +1,10 @@
+import type { ToggleNavigationProps } from "./types";
 import { accountUrl, homeUrl } from "~/constants";
 import { ToggleTheme } from "./toggleTheme";
 import Navigation from "./navigation";
 import { CustomLink } from "../ui";
 
-export default function Contents() {
+export default function Contents({ setOpen }: ToggleNavigationProps) {
    return (
       <>
          <section>
@@ -12,7 +13,7 @@ export default function Contents() {
                   ProfileFolio
                </CustomLink>
             </div>
-            <Navigation />
+            <Navigation setOpen={setOpen} />
          </section>
          <section>
             <div className="flex items-center justify-between text-sm">
