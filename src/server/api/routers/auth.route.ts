@@ -27,9 +27,7 @@ export const authRouter = createTRPCRouter({
          if (!response?.[0]) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create user" });
 
          const firstName = response[0].name.split(" ")[0];
-         const profile = await ctx.db
-            .insert(profiles)
-            .values({ headline: `Hello, this is ${firstName ?? "user"}`, userId: response[0].userId });
+         await ctx.db.insert(profiles).values({ headline: `Hello, this is ${firstName ?? "user"}`, userId: response[0].userId });
 
          return { message: "User register successfull", userId: response[0].userId };
       } catch (err: unknown) {
