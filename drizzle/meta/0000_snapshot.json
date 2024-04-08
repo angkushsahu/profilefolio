@@ -1,0 +1,616 @@
+{
+   "id": "93a2447b-8415-4d2d-a8b0-fd565e4a17e7",
+   "prevId": "00000000-0000-0000-0000-000000000000",
+   "version": "5",
+   "dialect": "pg",
+   "tables": {
+      "educations": {
+         "name": "educations",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_id": {
+               "name": "user_id",
+               "type": "uuid",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "institute_name": {
+               "name": "institute_name",
+               "type": "varchar(300)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "degree": {
+               "name": "degree",
+               "type": "varchar(300)",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "''"
+            },
+            "field_of_study": {
+               "name": "field_of_study",
+               "type": "varchar(300)",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "''"
+            },
+            "grade": {
+               "name": "grade",
+               "type": "varchar(20)",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "''"
+            },
+            "activities": {
+               "name": "activities",
+               "type": "varchar(300)",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "''"
+            },
+            "start_month": {
+               "name": "start_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "start_year": {
+               "name": "start_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "end_month": {
+               "name": "end_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "end_year": {
+               "name": "end_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "currently_working": {
+               "name": "currently_working",
+               "type": "boolean",
+               "primaryKey": false,
+               "notNull": false,
+               "default": false
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "user_education_index": {
+               "name": "user_education_index",
+               "columns": ["user_id"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {
+            "educations_user_id_users_id_fk": {
+               "name": "educations_user_id_users_id_fk",
+               "tableFrom": "educations",
+               "tableTo": "users",
+               "columnsFrom": ["user_id"],
+               "columnsTo": ["id"],
+               "onDelete": "cascade",
+               "onUpdate": "no action"
+            }
+         },
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {}
+      },
+      "experiences": {
+         "name": "experiences",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_id": {
+               "name": "user_id",
+               "type": "uuid",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "company_name": {
+               "name": "company_name",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "job_title": {
+               "name": "job_title",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "industry": {
+               "name": "industry",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "employment_type": {
+               "name": "employment_type",
+               "type": "employment_type",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "location_type": {
+               "name": "location_type",
+               "type": "location_type",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "location": {
+               "name": "location",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "skills": {
+               "name": "skills",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "description": {
+               "name": "description",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "start_month": {
+               "name": "start_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "start_year": {
+               "name": "start_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "end_month": {
+               "name": "end_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "end_year": {
+               "name": "end_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "currently_working": {
+               "name": "currently_working",
+               "type": "boolean",
+               "primaryKey": false,
+               "notNull": false,
+               "default": false
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "user_experience_index": {
+               "name": "user_experience_index",
+               "columns": ["user_id"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {
+            "experiences_user_id_users_id_fk": {
+               "name": "experiences_user_id_users_id_fk",
+               "tableFrom": "experiences",
+               "tableTo": "users",
+               "columnsFrom": ["user_id"],
+               "columnsTo": ["id"],
+               "onDelete": "cascade",
+               "onUpdate": "no action"
+            }
+         },
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {}
+      },
+      "profile": {
+         "name": "profile",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_id": {
+               "name": "user_id",
+               "type": "uuid",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "headline": {
+               "name": "headline",
+               "type": "varchar(400)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "current_position": {
+               "name": "current_position",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "about": {
+               "name": "about",
+               "type": "varchar(3000)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "profile_public_url": {
+               "name": "profile_public_url",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "profile_secure_url": {
+               "name": "profile_secure_url",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "location": {
+               "name": "location",
+               "type": "varchar(300)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "website_links": {
+               "name": "website_links",
+               "type": "json",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "phone": {
+               "name": "phone",
+               "type": "varchar(20)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "user_profile_index": {
+               "name": "user_profile_index",
+               "columns": ["user_id"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {
+            "profile_user_id_users_id_fk": {
+               "name": "profile_user_id_users_id_fk",
+               "tableFrom": "profile",
+               "tableTo": "users",
+               "columnsFrom": ["user_id"],
+               "columnsTo": ["id"],
+               "onDelete": "cascade",
+               "onUpdate": "no action"
+            }
+         },
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {}
+      },
+      "projects": {
+         "name": "projects",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_id": {
+               "name": "user_id",
+               "type": "uuid",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "project_name": {
+               "name": "project_name",
+               "type": "varchar(150)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "github_link": {
+               "name": "github_link",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "project_link": {
+               "name": "project_link",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "image_public_url": {
+               "name": "image_public_url",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "image_secure_url": {
+               "name": "image_secure_url",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "skills": {
+               "name": "skills",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "description": {
+               "name": "description",
+               "type": "varchar(500)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "start_month": {
+               "name": "start_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "start_year": {
+               "name": "start_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "end_month": {
+               "name": "end_month",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "end_year": {
+               "name": "end_year",
+               "type": "varchar(10)",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "currently_working": {
+               "name": "currently_working",
+               "type": "boolean",
+               "primaryKey": false,
+               "notNull": false,
+               "default": false
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "user_project_index": {
+               "name": "user_project_index",
+               "columns": ["user_id"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {
+            "projects_user_id_users_id_fk": {
+               "name": "projects_user_id_users_id_fk",
+               "tableFrom": "projects",
+               "tableTo": "users",
+               "columnsFrom": ["user_id"],
+               "columnsTo": ["id"],
+               "onDelete": "cascade",
+               "onUpdate": "no action"
+            }
+         },
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {}
+      },
+      "skills": {
+         "name": "skills",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_id": {
+               "name": "user_id",
+               "type": "uuid",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "title": {
+               "name": "title",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "skills": {
+               "name": "skills",
+               "type": "varchar(200)[]",
+               "primaryKey": false,
+               "notNull": false
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "user_skill_index": {
+               "name": "user_skill_index",
+               "columns": ["user_id"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {
+            "skills_user_id_users_id_fk": {
+               "name": "skills_user_id_users_id_fk",
+               "tableFrom": "skills",
+               "tableTo": "users",
+               "columnsFrom": ["user_id"],
+               "columnsTo": ["id"],
+               "onDelete": "cascade",
+               "onUpdate": "no action"
+            }
+         },
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {}
+      },
+      "users": {
+         "name": "users",
+         "schema": "",
+         "columns": {
+            "id": {
+               "name": "id",
+               "type": "uuid",
+               "primaryKey": true,
+               "notNull": true,
+               "default": "gen_random_uuid()"
+            },
+            "user_name": {
+               "name": "user_name",
+               "type": "varchar(50)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "name": {
+               "name": "name",
+               "type": "varchar(100)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "email": {
+               "name": "email",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "password": {
+               "name": "password",
+               "type": "varchar(200)",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "reset_password": {
+               "name": "reset_password",
+               "type": "varchar(100)",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "''"
+            },
+            "created_at": {
+               "name": "created_at",
+               "type": "timestamp",
+               "primaryKey": false,
+               "notNull": true,
+               "default": "CURRENT_TIMESTAMP"
+            }
+         },
+         "indexes": {
+            "username_index": {
+               "name": "username_index",
+               "columns": ["user_name"],
+               "isUnique": false
+            }
+         },
+         "foreignKeys": {},
+         "compositePrimaryKeys": {},
+         "uniqueConstraints": {
+            "users_user_name_unique": {
+               "name": "users_user_name_unique",
+               "nullsNotDistinct": false,
+               "columns": ["user_name"]
+            },
+            "users_email_unique": {
+               "name": "users_email_unique",
+               "nullsNotDistinct": false,
+               "columns": ["email"]
+            }
+         }
+      }
+   },
+   "enums": {
+      "employment_type": {
+         "name": "employment_type",
+         "values": {
+            "Internship": "Internship",
+            "Trainee": "Trainee",
+            "Full Time": "Full Time",
+            "Freelance": "Freelance",
+            "Part time": "Part time",
+            "Self employed": "Self employed",
+            "": ""
+         }
+      },
+      "location_type": {
+         "name": "location_type",
+         "values": {
+            "Remote": "Remote",
+            "Hybrid": "Hybrid",
+            "On Site": "On Site",
+            "": ""
+         }
+      }
+   },
+   "schemas": {},
+   "_meta": {
+      "columns": {},
+      "schemas": {},
+      "tables": {}
+   }
+}

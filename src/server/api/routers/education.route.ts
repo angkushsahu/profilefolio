@@ -5,6 +5,7 @@ import { createEducation, educationValidation, IdValidation } from "~/validation
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { educations } from "~/server/db/getSchema";
 import * as query from "~/server/db/queries";
+import { months } from "~/constants";
 
 export const educationRouter = createTRPCRouter({
    createEducation: protectedProcedure.input(createEducation).mutation(async ({ ctx, input }) => {
@@ -14,15 +15,14 @@ export const educationRouter = createTRPCRouter({
             .insert(educations)
             .values({
                ...restOfEducation,
-               endMonth: endDate.month,
-               endYear: endDate.year,
+               endMonth: endDate?.month,
+               endYear: endDate?.year,
                startMonth: startDate.month,
                startYear: startDate.year,
                userId: ctx.user.id,
             })
             .returning();
-         if (!education?.[0])
-            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create new education" });
+         if (!education?.[0]) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create new education" });
 
          return { message: "Created education successfully", education: education[0] };
       } catch (err: unknown) {
@@ -38,8 +38,8 @@ export const educationRouter = createTRPCRouter({
             .update(educations)
             .set({
                ...restOfEducation,
-               endMonth: endDate.month,
-               endYear: endDate.year,
+               endMonth: endDate?.month,
+               endYear: endDate?.year,
                startMonth: startDate.month,
                startYear: startDate.year,
             })
@@ -72,6 +72,18 @@ export const educationRouter = createTRPCRouter({
       try {
          const allEducations = await query.getAllEducations.execute({ userId: ctx.user.id });
          if (!allEducations) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to fetch all educations" });
+
+         allEducations.sort((a, b) => {
+            const aYear = parseInt(a.startYear);
+            const bYear = parseInt(b.startYear);
+
+            if (aYear !== bYear) return bYear - aYear;
+
+            const aIndex = months.indexOf(a.startMonth);
+            const bIndex = months.indexOf(b.startMonth);
+            return bIndex - aIndex;
+         });
+
          return { educations: allEducations, message: "Fetched all educations successfully" };
       } catch (err: unknown) {
          if (err instanceof Error) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: err.message });

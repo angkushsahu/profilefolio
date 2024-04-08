@@ -1,5 +1,5 @@
-import { index, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { relations, sql } from "drizzle-orm";
+import { boolean, index, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { type InferSelectModel, relations, sql } from "drizzle-orm";
 import { users } from "./user.schema";
 
 export const educations = pgTable(
@@ -16,8 +16,9 @@ export const educations = pgTable(
       activities: varchar("activities", { length: 300 }).default(""),
       startMonth: varchar("start_month", { length: 10 }).notNull(),
       startYear: varchar("start_year", { length: 10 }).notNull(),
-      endMonth: varchar("end_month", { length: 10 }).notNull(),
-      endYear: varchar("end_year", { length: 10 }).notNull(),
+      endMonth: varchar("end_month", { length: 10 }),
+      endYear: varchar("end_year", { length: 10 }),
+      currentlyWorking: boolean("currently_working").default(false),
       createdAt: timestamp("created_at")
          .default(sql`CURRENT_TIMESTAMP`)
          .notNull(),
@@ -30,3 +31,5 @@ export const educations = pgTable(
 export const educationRelations = relations(educations, ({ one }) => ({
    user: one(users, { fields: [educations.userId], references: [users.id] }),
 }));
+
+export type EducationSchemaType = InferSelectModel<typeof educations>;

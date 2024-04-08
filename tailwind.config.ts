@@ -19,7 +19,7 @@ const config = {
          },
          minHeight: {
             page: "95vh",
-            section: "100vh",
+            section: "calc(95vh - 7rem)",
          },
          colors: {
             border: "hsl(var(--border))",

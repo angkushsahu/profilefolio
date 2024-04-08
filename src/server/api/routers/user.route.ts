@@ -7,6 +7,7 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { users } from "~/server/db/getSchema";
 import * as query from "~/server/db/queries";
 import { hashStringWithBcrypt } from "~/lib";
+import cloudinary from "~/lib/cloudinary";
 
 export const userRouter = createTRPCRouter({
    checkUniqueUsername: publicProcedure.input(usernameSchema).query(async ({ input }) => {
@@ -69,6 +70,9 @@ export const userRouter = createTRPCRouter({
 
    deleteUser: protectedProcedure.mutation(async ({ ctx }) => {
       try {
+         const profile = await query.getProfileByUserId.execute({ userId: ctx.user.id });
+         if (profile?.profilePublicUrl) await cloudinary.uploader.destroy(profile.profilePublicUrl);
+
          const user = await ctx.db.delete(users).where(eq(users.id, ctx.user.id)).returning();
          // eslint-disable-next-line
          if (!user || !user.length) throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });

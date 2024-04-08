@@ -26,9 +26,9 @@ export const webMeta: Metadata = {
    creator: "Angkush Sahu",
    publisher: "Angkush Sahu",
    applicationName: page.title,
-   generator: "Next.js and Vercel", // TODO: change the hosting service here
+   generator: "Next.js and Vercel",
    referrer: "origin-when-cross-origin",
-   metadataBase: new URL("https://profile-folio.vercel.app"), // TODO: change the url here
+   metadataBase: new URL("https://profile-folio.vercel.app"),
    authors: [{ name: "Angkush Sahu", url: "https://angkushsahu.vercel.app" }],
    openGraph: {
       title: page.title,

@@ -1,4 +1,4 @@
-import { ToggleTheme } from "./toggleTheme";
+import { ToggleTheme } from "../toggleTheme";
 import Responsive from "./responsive";
 import { homeUrl } from "~/constants";
 import { CustomLink } from "../ui";

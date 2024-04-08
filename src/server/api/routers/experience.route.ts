@@ -5,6 +5,7 @@ import { IdValidation, createExperience, experienceValidation } from "~/validati
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { experiences } from "~/server/db/getSchema";
 import * as query from "~/server/db/queries";
+import { months } from "~/constants";
 
 export const experienceRouter = createTRPCRouter({
    createExperience: protectedProcedure.input(createExperience).mutation(async ({ ctx, input }) => {
@@ -14,15 +15,14 @@ export const experienceRouter = createTRPCRouter({
             .insert(experiences)
             .values({
                ...restOfExperience,
-               endMonth: endDate.month,
-               endYear: endDate.year,
+               endMonth: endDate?.month,
+               endYear: endDate?.year,
                startMonth: startDate.month,
                startYear: startDate.year,
                userId: ctx.user.id,
             })
             .returning();
-         if (!experience?.[0])
-            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create new experience" });
+         if (!experience?.[0]) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to create new experience" });
 
          return { message: "Created experience successfully", experience: experience[0] };
       } catch (err: unknown) {
@@ -38,8 +38,8 @@ export const experienceRouter = createTRPCRouter({
             .update(experiences)
             .set({
                ...restOfExperience,
-               endMonth: endDate.month,
-               endYear: endDate.year,
+               endMonth: endDate?.month,
+               endYear: endDate?.year,
                startMonth: startDate.month,
                startYear: startDate.year,
             })
@@ -72,6 +72,18 @@ export const experienceRouter = createTRPCRouter({
       try {
          const allExperiences = await query.getAllExperiences.execute({ userId: ctx.user.id });
          if (!allExperiences) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to fetch all experiences" });
+
+         allExperiences.sort((a, b) => {
+            const aYear = parseInt(a.startYear);
+            const bYear = parseInt(b.startYear);
+
+            if (aYear !== bYear) return bYear - aYear;
+
+            const aIndex = months.indexOf(a.startMonth);
+            const bIndex = months.indexOf(b.startMonth);
+            return bIndex - aIndex;
+         });
+
          return { experiences: allExperiences, message: "Fetched all experiences successfully" };
       } catch (err: unknown) {
          if (err instanceof Error) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: err.message });

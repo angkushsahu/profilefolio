@@ -1,5 +1,5 @@
 import { index, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { relations, sql } from "drizzle-orm";
+import { type InferSelectModel, relations, sql } from "drizzle-orm";
 import { users } from "./user.schema";
 
 export const skills = pgTable(
@@ -23,3 +23,5 @@ export const skills = pgTable(
 export const skillRelations = relations(skills, ({ one }) => ({
    user: one(users, { fields: [skills.userId], references: [users.id] }),
 }));
+
+export type SkillSchemaType = InferSelectModel<typeof skills>;

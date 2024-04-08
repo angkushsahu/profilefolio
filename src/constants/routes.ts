@@ -7,9 +7,10 @@ export const forgotPasswordUrl = "/auth/forgot-password";
 export const baseResetPasswordUrl = "/auth/reset-password";
 // user route links
 export const accountUrl = "/user/account";
-export const updateAccountUrl = "/user/account/update";
+export const updateAccountUrl = "/user/update";
 export const changePasswordUrl = "/user/change-password";
 // profile route links
+export const profileDefaultUrl = "/profile";
 export const profileHomeUrl = "/profile/home";
 export const profileSkillsUrl = "/profile/skills";
 export const profileProjectsUrl = "/profile/projects";

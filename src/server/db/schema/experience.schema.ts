@@ -1,5 +1,5 @@
-import { index, pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { relations, sql } from "drizzle-orm";
+import { boolean, index, pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { type InferSelectModel, relations, sql } from "drizzle-orm";
 
 import { EMPLOYMENT_TYPE_VALUES, LOCATION_TYPE_VALUES } from "~/constants";
 import { users } from "./user.schema";
@@ -25,8 +25,9 @@ export const experiences = pgTable(
       description: varchar("description", { length: 500 }),
       startMonth: varchar("start_month", { length: 10 }).notNull(),
       startYear: varchar("start_year", { length: 10 }).notNull(),
-      endMonth: varchar("end_month", { length: 10 }).notNull(),
-      endYear: varchar("end_year", { length: 10 }).notNull(),
+      endMonth: varchar("end_month", { length: 10 }),
+      endYear: varchar("end_year", { length: 10 }),
+      currentlyWorking: boolean("currently_working").default(false),
       createdAt: timestamp("created_at")
          .default(sql`CURRENT_TIMESTAMP`)
          .notNull(),
@@ -39,3 +40,5 @@ export const experiences = pgTable(
 export const experienceRelations = relations(experiences, ({ one }) => ({
    user: one(users, { fields: [experiences.userId], references: [users.id] }),
 }));
+
+export type ExperienceSchemaType = InferSelectModel<typeof experiences>;
