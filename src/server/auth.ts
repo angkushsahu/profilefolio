@@ -1,13 +1,9 @@
 import { getServerSession, type Awaitable, type NextAuthOptions, type User } from "next-auth";
 import CredentialsProvider, { type CredentialInput } from "next-auth/providers/credentials";
 
-import { loginUrl } from "~/constants";
 import { env } from "~/env";
 
 export const authOptions: NextAuthOptions = {
-   pages: {
-      signIn: loginUrl,
-   },
    session: {
       strategy: "jwt",
       maxAge: Number(env.COOKIEAGE),
