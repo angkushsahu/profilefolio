@@ -36,11 +36,8 @@ export const authOptions: NextAuthOptions = {
          session.user = token.user;
          return session;
       },
-      signIn() {
-         return true;
-      },
-      redirect({ baseUrl }) {
-         return baseUrl;
+      redirect({ url }) {
+         return url;
       },
    },
 };
