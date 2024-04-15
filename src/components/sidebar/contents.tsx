@@ -1,7 +1,7 @@
 import type { ToggleNavigationProps } from "./types";
-import { accountUrl, homeUrl } from "~/constants";
 import { ToggleTheme } from "../toggleTheme";
 import PreviewLink from "./previewLink";
+import { homeUrl } from "~/constants";
 import Navigation from "./navigation";
 import { CustomLink } from "../ui";
 
@@ -18,8 +18,7 @@ export default function Contents({ setOpen }: ToggleNavigationProps) {
          </section>
          <section>
             <div className="flex items-center justify-between text-sm">
-               <PreviewLink />
-               <CustomLink href={accountUrl}>Account</CustomLink>
+               <PreviewLink setOpen={setOpen} />
                <ToggleTheme />
             </div>
          </section>
