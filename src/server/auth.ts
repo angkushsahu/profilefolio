@@ -39,6 +39,9 @@ export const authOptions: NextAuthOptions = {
       signIn() {
          return true;
       },
+      redirect({ baseUrl }) {
+         return baseUrl;
+      },
    },
 };
 
