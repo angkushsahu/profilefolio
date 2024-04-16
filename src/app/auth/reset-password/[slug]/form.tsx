@@ -1,15 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "~/components";
 import { type ResetPasswordType, resetPasswordSchema } from "~/validations";
+import { loginUrl } from "~/constants";
 import { api } from "~/trpc/react";
 
 export default function ResetPasswordForm({ resetId }: { resetId: string }) {
+   const router = useRouter();
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -22,6 +25,7 @@ export default function ResetPasswordForm({ resetId }: { resetId: string }) {
       onSuccess(data) {
          toast({ title: data.message });
          resetPasswordForm.reset();
+         router.replace(loginUrl);
       },
       onError(error) {
          toast({ variant: "destructive", title: error.message });
