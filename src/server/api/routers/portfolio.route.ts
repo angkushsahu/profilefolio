@@ -2,6 +2,7 @@ import { portfolioInfoSchema, verifyUsernameSchema } from "~/validations";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import jsonToObjArray from "~/lib/convertJsonToObjectArray";
 import * as query from "~/server/db/queries";
+import { months } from "~/constants";
 
 export const portfolioRouter = createTRPCRouter({
    verifyUsername: publicProcedure.input(verifyUsernameSchema).query(async ({ input }) => {
@@ -30,6 +31,48 @@ export const portfolioRouter = createTRPCRouter({
 
       let updatedProfile = profile;
       if (profile) updatedProfile = jsonToObjArray(profile);
+
+      if (educations) {
+         educations.sort((a, b) => {
+            const aYear = parseInt(a.startYear);
+            const bYear = parseInt(b.startYear);
+
+            if (aYear !== bYear) return bYear - aYear;
+
+            const aIndex = months.indexOf(a.startMonth);
+            const bIndex = months.indexOf(b.startMonth);
+            return bIndex - aIndex;
+         });
+      }
+
+      if (experiences) {
+         experiences.sort((a, b) => {
+            const aYear = parseInt(a.startYear);
+            const bYear = parseInt(b.startYear);
+
+            if (aYear !== bYear) return bYear - aYear;
+
+            const aIndex = months.indexOf(a.startMonth);
+            const bIndex = months.indexOf(b.startMonth);
+            return bIndex - aIndex;
+         });
+      }
+
+      if (projects) {
+         projects.sort((a, b) => {
+            if (!a.startMonth || !a.startYear) return 1;
+            else if (!b.startMonth || !b.startYear) return -1;
+
+            const aYear = parseInt(a.startYear);
+            const bYear = parseInt(b.startYear);
+
+            if (aYear !== bYear) return bYear - aYear;
+
+            const aIndex = months.indexOf(a.startMonth);
+            const bIndex = months.indexOf(b.startMonth);
+            return bIndex - aIndex;
+         });
+      }
 
       return {
          message: "Portfolio details fetched successfully",
