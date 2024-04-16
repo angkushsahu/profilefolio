@@ -53,8 +53,7 @@ export const userRouter = createTRPCRouter({
    updateUser: protectedProcedure.input(updateAccountSchema).mutation(async ({ ctx, input }) => {
       try {
          const usernameAlreadyExists = await query.getUserByUsername.execute({ username: input.username });
-         // eslint-disable-next-line
-         if ((usernameAlreadyExists && usernameAlreadyExists.id !== ctx.user.id) || !usernameAlreadyExists)
+         if (usernameAlreadyExists && usernameAlreadyExists.id !== ctx.user.id)
             throw new TRPCError({ code: "CONFLICT", message: "User name already exists, try another user name" });
 
          await ctx.db.update(users).set(input).where(eq(users.id, ctx.user.id));
