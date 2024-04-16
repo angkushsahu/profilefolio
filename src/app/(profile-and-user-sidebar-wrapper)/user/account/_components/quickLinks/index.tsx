@@ -1,14 +1,14 @@
-import { Globe, ShieldAlert, SquareUser } from "lucide-react";
+import { ShieldAlert, SquareUser } from "lucide-react";
 import Link from "next/link";
 
-import { changePasswordUrl, homeUrl, updateAccountUrl } from "~/constants";
-import DeleteAccount from "./deleteAccount";
-import Logout from "./logout";
+import { changePasswordUrl, updateAccountUrl } from "~/constants";
+import DeleteAccount from "../deleteAccount";
+import ViewPortfolio from "./viewPortfolio";
+import Logout from "../logout";
 
 const quickLinks = [
    { Icon: SquareUser, title: "Update Account", description: "Update your account details here", href: updateAccountUrl },
    { Icon: ShieldAlert, title: "Change Password", description: "Change your password here", href: changePasswordUrl },
-   { Icon: Globe, title: "View portfolio", description: "See your portfolio here", href: homeUrl },
 ];
 
 export default function QuickLinks() {
@@ -26,6 +26,7 @@ export default function QuickLinks() {
                   </article>
                </Link>
             ))}
+            <ViewPortfolio />
             <Logout />
             <DeleteAccount />
          </div>
