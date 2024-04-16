@@ -125,7 +125,7 @@ export default function ProjectForm(props: ProjectFormProps) {
                            <FormLabel>
                               Start Month {"("}Optional{")"}
                            </FormLabel>
-                           <Select onValueChange={field.onChange}>
+                           <Select onValueChange={field.onChange} defaultValue={props.values.startDate?.month ?? ""}>
                               <FormControl>
                                  <SelectTrigger>
                                     <SelectValue placeholder="Select month" />
@@ -151,7 +151,7 @@ export default function ProjectForm(props: ProjectFormProps) {
                            <FormLabel>
                               Start Year {"("}Optional{")"}
                            </FormLabel>
-                           <Select onValueChange={field.onChange}>
+                           <Select onValueChange={field.onChange} defaultValue={props.values.startDate?.year ?? ""}>
                               <FormControl>
                                  <SelectTrigger>
                                     <SelectValue placeholder="Select year" />
@@ -181,7 +181,7 @@ export default function ProjectForm(props: ProjectFormProps) {
                                  <FormLabel>
                                     End Month {"("}Optional{")"}
                                  </FormLabel>
-                                 <Select onValueChange={field.onChange}>
+                                 <Select onValueChange={field.onChange} defaultValue={props.values.endDate?.month ?? ""}>
                                     <FormControl>
                                        <SelectTrigger>
                                           <SelectValue placeholder="Select month" />
@@ -207,7 +207,7 @@ export default function ProjectForm(props: ProjectFormProps) {
                                  <FormLabel>
                                     End Year {"("}Optional{")"}
                                  </FormLabel>
-                                 <Select onValueChange={field.onChange}>
+                                 <Select onValueChange={field.onChange} defaultValue={props.values.endDate?.year ?? ""}>
                                     <FormControl>
                                        <SelectTrigger>
                                           <SelectValue placeholder="Select year" />

@@ -18,7 +18,7 @@ export default function ProjectBox(props: ProjectType) {
                   <span>Skills:</span> <span className="text-muted-foreground">{props.skills}</span>
                </p>
             ) : null}
-            {props.startDate || props.endDate ? (
+            {(props.startDate?.month && props.startDate.year) || (props.endDate?.month && props.endDate.year) ? (
                <p>
                   {props.startDate?.month && props.startDate.year ? (
                      <span>
