@@ -22,7 +22,7 @@ export default function UserProfile() {
    if (userLoading || profileLoading) return <Loading />;
 
    return (
-      <section className="flex items-center justify-between">
+      <section className="flex flex-col items-center justify-between gap-y-8 sm:flex-row">
          <section>
             {profileData.profile.profileSecureUrl ? (
                <Image
@@ -39,7 +39,7 @@ export default function UserProfile() {
             )}
          </section>
          <section>
-            <div className="space-y-2">
+            <div className="space-y-2 text-center sm:text-left">
                <h1>{userData?.user.name}</h1>
                <p>@{userData?.user.username}</p>
                <p className="text-sm text-muted-foreground">{userData?.user.email}</p>
